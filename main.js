@@ -1,32 +1,19 @@
 const $table = document.querySelector('#table')
 
 $table.addEventListener('click', event => {
-    if (event.target.classList.contains('btn-primary')) {
-        hideRow(event)
-    }
-    if (event.target.classList.contains('btn-success')) {
-        updateQuantity(event)
+    if (event.target.classList.contains('btn-primary') || event.target.classList.contains('btn-success')) {
+        updateTable(event)
     }
 })
 
-function hideRow(event) {
-    const $row = event.target.parentElement.parentElement
-    const id = new FormData()
-    id.append('id', $row.dataset.id)
-    fetch('hideRow.php', {
-        method: 'POST',
-        body: id,
-    })
-        .then(response => response.json())
-        .then(data => renderTable(data))
-}
-
-function updateQuantity(event) {
+function updateTable(event) {
     const $row = event.target.parentElement.parentElement
     const data = new FormData()
     data.append('id', $row.dataset.id)
-    data.append('action', event.target.dataset.action)
-    fetch('updateQuantity.php', {
+    if (event.target.dataset.action) {
+        data.append('action', event.target.dataset.action)
+    }
+    fetch('updateTable.php', {
         method: 'POST',
         body: data,
     })
@@ -56,5 +43,4 @@ function renderTable(data) {
             `)
         }
     })
-
 }

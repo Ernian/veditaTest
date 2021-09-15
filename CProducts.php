@@ -2,18 +2,8 @@
 
 class CProducts
 {
-    static $connect = null;
-
-    protected static function getConnect()
-    {
-        // if(!self::$connect) {
-        //     self::$connect = mysqli_connect(HOST, USER, PASSWORD, DB_NAME);
-        // }
-    }
-
     public static function getProducts($connect, $limit = '8')
     {
-        // self::getConnect();
         $sqlProducts = "select * from products order by date_create desc limit $limit";
         $response = mysqli_query($connect, $sqlProducts);
         if(mysqli_num_rows($response)) {
@@ -30,9 +20,17 @@ class CProducts
         }
     }
 
-    public static function updateTable($sqlRequest)
+    public static function hideRow($id, $connect)
     {
-        self::getConnect();
-        mysqli_query(self::$connect, $sqlRequest);
+        $sqlRequest = "update products set hide=1 where id=$id";
+        mysqli_query($connect, $sqlRequest);
+        echo json_encode(self::getProducts($connect));
+    }
+    
+    public static function updateQuantity($id, $action, $connect)
+    {
+        $sqlRequest = "update products set product_quantity=product_quantity{$action}1 where id=$id";
+        mysqli_query($connect, $sqlRequest);
+        echo json_encode(self::getProducts($connect));
     }
 }
