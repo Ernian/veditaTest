@@ -1,23 +1,22 @@
 <?php
+require_once 'config.php';
+require_once 'CProducts.php';
 
-require_once './config.php';
-require_once './CProducts.php';
-
-$instance = new CProducts;
-$products = $instance->getProducts('5');
-
-// echo '<pre>';
-// var_dump($products);
-// echo '</pre>';
+$products = CProducts::getProducts($connect);
 ?>
 
-<?php foreach($products as $product):?>
-<div>
-    Product name - <span><?=$product['PRODUCT_NAME']?></span> |
-    Product price - <span><?=$product['PRODUCT_PRICE']?></span> |
-    Product article - <span><?=$product['PRODUCT_ARTICLE']?></span> |
-    Product quantity - <span><?=$product['PRODUCT_QUANTITY']?></span> |
-    Date create - <span><?=$product['DATE_CREATE']?></span> |
-    <input data-id="<?=$product['ID']?>" type="button" value="Hide">
-</div>
-<?php endforeach?>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <title>Vedita</title>
+</head>
+<body>
+    <?php require_once './templateTable.php'?>
+    <script src="main.js"></script>
+</body>
+</html>
+
